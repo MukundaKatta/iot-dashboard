@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: iot-timescaledb
+    environment:
+      POSTGRES_USER: iot
+      POSTGRES_PASSWORD: iotpassword
+      POSTGRES_DB: iot_dashboard
+    ports:
+      - "5432:5432"
+    volumes:
+      - tsdata:/home/postgres/pgdata/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iot -d iot_dashboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iot-server
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DB_HOST: timescaledb
+      DB_PORT: "5432"
+      DB_USER: iot
+      DB_PASSWORD: iotpassword
+      DB_NAME: iot_dashboard
+      ENABLE_SIMULATOR: "true"
+      SIM_INTERVAL: "5s"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  tsdata:
