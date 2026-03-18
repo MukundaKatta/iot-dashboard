@@ -39,5 +39,3 @@ python -m src run --input "data"
 pytest tests/ -v
 ```
 
-## License
-(c) 2026 Officethree Technologies. All Rights Reserved.
