@@ -1,41 +1,17 @@
 # iot-dashboard
 
-**IoT sensor monitoring dashboard with Go, HTMX, TimescaleDB, and real-time SSE**
+IoT sensor monitoring dashboard project with a mix of real Go backend code and stub scaffolding.
 
-![Build](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-proprietary-red)
+## What's actually here
 
-## Install
-```bash
-pip install -e ".[dev]"
-```
+The Go backend (`cmd/server/`, `internal/`) follows standard Go project layout with a server entrypoint and internal packages. The project uses Go modules (go.mod/go.sum) and includes Docker configuration. The description mentions HTMX, TimescaleDB, and real-time SSE.
 
-## Quick Start
-```python
-from src.core import IotDashboard
- instance = IotDashboard()
-r = instance.detect(input="test")
-```
+There is also a `src/` directory containing a stub core.py file with placeholder methods that return fixed dictionaries - this is unrelated scaffolding and does not connect to the Go code.
 
-## CLI
-```bash
-python -m src status
-python -m src run --input "data"
-```
+## Tech stack
 
-## API
-| Method | Description |
-|--------|-------------|
-| `detect()` | Detect |
-| `scan()` | Scan |
-| `monitor()` | Monitor |
-| `alert()` | Alert |
-| `get_report()` | Get report |
-| `configure()` | Configure |
-| `get_stats()` | Get stats |
-| `reset()` | Reset |
+Go, HTMX, TimescaleDB, Docker, SSE
 
-## Test
-```bash
-pytest tests/ -v
-```
+## Status
 
+The Go backend has real project structure. Whether the internal packages contain full implementations or are partially stubbed would require deeper inspection.
