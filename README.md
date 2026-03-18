@@ -1,92 +1,43 @@
-# IoT Sensor Dashboard
+# iot-dashboard
 
-A lightweight, real-time IoT sensor monitoring dashboard built with Go, HTMX, and TimescaleDB.
+**IoT sensor monitoring dashboard with Go, HTMX, TimescaleDB, and real-time SSE**
 
-## Features
+![Build](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-proprietary-red)
 
-- **Live Sensor Data** — Real-time updates via Server-Sent Events (SSE)
-- **Sensor Groups** — Organize sensors into logical groups
-- **Time-Series Storage** — TimescaleDB hypertables for efficient sensor readings
-- **Alerting** — Configurable threshold-based alerts per sensor
-- **Sensor Simulator** — Built-in data simulator for development and testing
-- **Server-Side Rendering** — Fast HTML responses with Go templates + HTMX
-- **No JavaScript Framework** — Minimal client JS via HTMX for dynamic updates
-- **REST API** — JSON endpoints for sensor CRUD, readings, and groups
-- **Dockerized** — Single docker-compose for app + TimescaleDB
-
-## Tech Stack
-
-- **Language:** Go 1.22
-- **Router:** chi v5
-- **Frontend:** HTMX + Go html/template
-- **Database:** TimescaleDB (PostgreSQL extension)
-- **Real-Time:** Server-Sent Events (SSE)
-- **Testing:** Go testing + testify
-- **Containerization:** Docker + Docker Compose
-
-## Getting Started
-
-### Prerequisites
-
-- Go 1.22+
-- Docker & Docker Compose
-
-### Installation
-
+## Install
 ```bash
-git clone <repo-url>
-cd iot-dashboard
+pip install -e ".[dev]"
 ```
 
-### Run
+## Quick Start
+```python
+from src.core import IotDashboard
+ instance = IotDashboard()
+r = instance.detect(input="test")
+```
 
+## CLI
 ```bash
-# With Docker (recommended)
-docker-compose up
-
-# Or manually (requires TimescaleDB running)
-go run cmd/server/main.go
+python -m src status
+python -m src run --input "data"
 ```
 
-### Environment Variables
+## API
+| Method | Description |
+|--------|-------------|
+| `detect()` | Detect |
+| `scan()` | Scan |
+| `monitor()` | Monitor |
+| `alert()` | Alert |
+| `get_report()` | Get report |
+| `configure()` | Configure |
+| `get_stats()` | Get stats |
+| `reset()` | Reset |
 
-Configure via environment variables or a `.env` file:
-
-| Variable       | Description              | Default               |
-|----------------|--------------------------|-----------------------|
-| `DATABASE_URL` | TimescaleDB connection   | `postgres://...`      |
-| `PORT`         | HTTP server port         | `8080`                |
-| `SIMULATE`     | Enable sensor simulator  | `true`                |
-
-## Project Structure
-
-```
-cmd/
-└── server/
-    └── main.go              # Application entry point
-internal/
-├── handlers/
-│   └── handlers.go          # HTTP route handlers
-├── middleware/
-│   └── middleware.go         # Logging, CORS, recovery
-├── models/
-│   └── models.go            # Sensor, Reading, Group, Alert structs
-├── services/
-│   ├── database.go          # DB connection and migrations
-│   ├── sensor_service.go    # Sensor CRUD operations
-│   ├── reading_service.go   # Time-series read/write
-│   ├── group_service.go     # Sensor group management
-│   ├── alert_service.go     # Alert rules and evaluation
-│   └── sse.go               # Server-Sent Events broker
-├── simulator/
-│   └── simulator.go         # Fake sensor data generator
-└── templates/
-    ├── engine.go            # Template rendering engine
-    ├── layout.go            # Base HTML layout
-    ├── pages.go             # Page templates
-    └── partials.go          # Reusable HTMX fragments
+## Test
+```bash
+pytest tests/ -v
 ```
 
 ## License
-
-MIT
+(c) 2026 Officethree Technologies. All Rights Reserved.
